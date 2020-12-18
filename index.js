@@ -25,3 +25,6 @@ io.on("connection", function (socket) {
     io.emit("message", msg);
   });
 });
+app.use((req, res, next) => {
+  return errRes(res, "404 Not found");
+});
