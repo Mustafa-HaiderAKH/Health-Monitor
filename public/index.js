@@ -1,4 +1,4 @@
-var socket = io.connect("");
+var socket = io.connect("https://health-monitor-ice.herokuapp.com/");
 
 // Query DOM
 var message = document.getElementById("message"),
@@ -20,12 +20,12 @@ btn.addEventListener("click", function () {
 });
 btn2.addEventListener("click", () => {
   output.innerHTML +=
-    "<p><strong>" + "The tempature is   " + "data" + "c" + "</p>";
+    "<p><strong>" + "The tempature is   " + data + "c" + "</p>";
 });
 
 // Listen for events
 socket.on("message", function (data) {
   feedback.innerHTML = "";
-  output.innerHTML +=
+  output.innerHTML =
     "<p><strong>" + "The tempature is   " + data + "c" + "</p>";
 });
