@@ -3,42 +3,33 @@ var socket = io.connect();
 // Query DOM
 var message = document.getElementById("message"),
   handle = document.getElementById("handle"),
-  btn = document.getElementById("send"),
-  private = document.getElementById("private"),
   output = document.getElementById("output"),
-  privateoutput = document.getElementById("private_output");
-
+  send = document.getElementById("send"),
+  join = document.getElementById("join");
 // Emit events
 
 // Listen for events
-socket.on("message", function (data) {
-  output.innerHTML = `<P> The temperature ${data}</p>`;
-});
-socket.on("chat", function (data) {
-  output.innerHTML = `<P>${data.message}</p>`;
-});
-socket.on("private_message", function (data) {
-  privateoutput.innerHTML = `<P>${data.message}</p>`;
-});
 socket.on("connect", () => {
   console.log(socket.id);
 });
-btn.addEventListener("click", function () {
-  console.log(message.value);
-  socket.emit("chat", {
-    message: message.value,
-    handle: handle.value,
-  });
-  console.log(message.value);
-
-  message.value = "";
+socket.on("message", function (data) {
+  output.innerHTML = `<P> The temperature ${data}</p>`;
 });
-private.addEventListener("click", function () {
-  socket.emit("private_message", socket.id, {
+socket.on("privatechat", function (msg) {
+  msg.message
+    ? msg.handle
+      ? (output.innerHTML = `<p>${msg.handle}:${msg.message}</p>`)
+      : (output.innerHTML = `<p>anonymous:${msg.message}</p>`)
+    : null;
+});
+
+join.addEventListener("click", () => {
+  console.log("uuu");
+  socket.emit("joinRoom");
+});
+send.addEventListener("click", () => {
+  socket.emit("privatechat", {
     message: message.value,
     handle: handle.value,
   });
-  console.log(`The private message is ${message.value}`);
-
-  message.value = "";
 });

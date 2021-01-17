@@ -72,6 +72,7 @@ button {
   border-radius: 0 0 2px 2px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  margin-top: 1rem;
 }
 #send:hover {
   font-size: 20px;
